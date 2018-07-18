@@ -1,4 +1,4 @@
-# questions
+# React Object Questions
 
 > quiz engine
 
@@ -7,20 +7,44 @@
 ## Install
 
 ```bash
-npm install --save questions
+npm install --save react-object-questions
+```
+
+or 
+
+```bash
+yarn add react-object-questions
+
 ```
 
 ## Usage
 
 ```jsx
 import React, { Component } from 'react'
+import Test from 'react-object-questions'
 
-import MyComponent from 'questions'
+const test = {
+  title: 'Test Title',
+  questionFieldData: [
+    {name: 'name', type: 'text', answerField: 'capital'}
+  ],
+  objects: [
+    {name: 'Russia', capital: 'Moscow'},
+    {name: 'Germany', capital: 'Berlin'},
+    {name: 'Englang', capital: 'London'},
+    {name: 'France', capital: 'Paris'}
+  ]
+}
 
-class Example extends Component {
+export default class App extends Component {
   render () {
     return (
-      <MyComponent />
+      <div>
+        <Test
+          test={{data: test}}
+          startTest={()=>{}}
+        />
+      </div>
     )
   }
 }
