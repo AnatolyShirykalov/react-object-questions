@@ -35,7 +35,7 @@ class Test extends Component {
 
   initNewTest(test = this.props.test.data) {
     const questions = ObjectTest(test)
-    this.setState({questions, questionId: 0, right: 0, wrong: 0})
+    this.setState({questions, questionId: 0, right: 0, wrong: 0, pending: false, error: false})
   }
   nextQuestion = () => {
     this.setState({questionId: this.state.questionId + 1})
