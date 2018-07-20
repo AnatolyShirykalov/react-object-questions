@@ -44,6 +44,8 @@ export default class App extends Component {
 }
 ```
 
+See [DEMO](https://anatolyshirykalov.github.io/react-object-questions)
+
 ## License
 
 MIT © [AnatolyShirykalov](https://github.com/AnatolyShirykalov)
