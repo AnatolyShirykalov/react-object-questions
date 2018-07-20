@@ -1,22 +1,38 @@
 // Button.js
-import classes from './index.css'
 import React from 'react'
-import _ from 'lodash'
+import PropTypes from 'prop-types'
+import defaultClasses from './index.css'
+import classNames from 'classnames/bind'
 
 const Button = (props) => {
-  const {disabled, value, onClick} = props;
-  const className = _.intersection(
-    ['active', 'right', 'wrong'],
-    _.keys(_.pickBy(props, _.identity))
-  ).map(k=>classes[k]).join(" ") + ' ' + classes.btn;
+  const {disabled, value, onClick, classes, active, right, wrong} = props
+  const cx = classNames.bind(classes)
   return (
     <button
-      className={className}
+      className={cx('btn', {active, right, wrong})}
       disabled={disabled}
       onClick={onClick}
       dangerouslySetInnerHTML={{__html: value}}
-    >
-    </button>
-  );
+    />
+  )
 }
-export default Button;
+
+Button.propTypes = {
+  disabled: PropTypes.bool,
+  value: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+  classes: PropTypes.object,
+  active: PropTypes.bool,
+  right: PropTypes.bool,
+  wrong: PropTypes.bool
+}
+
+Button.defaultProps = {
+  classes: defaultClasses,
+  disabled: false,
+  active: false,
+  right: false,
+  wrong: false
+}
+
+export default Button

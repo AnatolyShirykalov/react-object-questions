@@ -10,7 +10,20 @@ import {ObjectTest} from './core'
 class Test extends Component {
   static propTypes = {
     test: PropTypes.object,
-    startTest: PropTypes.function
+    startTest: PropTypes.func,
+    onNextQuestion: PropTypes.func,
+    onShowQuestion: PropTypes.func,
+    onAnswer: PropTypes.func,
+    nextQuestionLabel: PropTypes.string,
+    newTestLabel: PropTypes.string
+  }
+  static defaultProps = {
+    test: {state: 'pending'},
+    startTest: () => {},
+    onNextQuestion: () => {},
+    onShowQuestion: () => {},
+    onAnswer: () => {},
+    newTestLabel: 'New test'
   }
   state = {
     btnDisabled: true,
@@ -38,14 +51,17 @@ class Test extends Component {
     this.setState({questions, questionId: 0, right: 0, wrong: 0, pending: false, error: false})
   }
   nextQuestion = () => {
+    this.props.onNextQuestion(this.state.questionId)
     this.setState({questionId: this.state.questionId + 1})
   }
   answer = (answer) => {
     const questions = this.state.questions.map(q => {
       if (q.id !== this.state.questionId) return {...q}
       if (q.answers.find(a => a.value === answer).right) {
+        this.props.onAnswer({answer, right: true})
         this.setState({right: this.state.right + 1})
       } else {
+        this.props.onAnswer({answer, right: false})
         this.setState({wrong: this.state.wrong + 1})
       }
       return {...q, answer}
@@ -75,13 +91,14 @@ class Test extends Component {
       <NextQuestion
         onClick={this.nextQuestion}
         disabled={this.btnDisabled()}
+        text={this.props.nextQuestionLabel}
       />
     )
     if (this.state.right + this.state.wrong === this.state.questions.length) {
       nextBtn = (
         <NextQuestion
           onClick={() => this.initNewTest()}
-          text='Новый тест'
+          text={this.props.newTestLabel}
         />
       )
     }
@@ -97,6 +114,7 @@ class Test extends Component {
     return (
       <div>
         <VisibleQuestion
+          onShowQuestion={this.props.onShowQuestion}
           question={question}
           answers={answers}
           disabled={disabled}

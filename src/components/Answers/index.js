@@ -1,11 +1,12 @@
-import classes from './index.css'
+import defaultClasses from './index.css'
 import React from 'react'
 import Button from '../Button'
+import PropTypes from 'prop-types'
 
-const Answers = ({answers, disabled, onClick}) => {
+const Answers = ({answers, disabled, onClick, classes}) => {
   return (
-    <div className={classes.answers}>
-      { answers.map( (answer) => {
+    <div className={classes && classes.answers}>
+      { answers.map((answer) => {
         return (
           <Button
             {...answer}
@@ -19,5 +20,16 @@ const Answers = ({answers, disabled, onClick}) => {
     </div>
   )
 }
-export default Answers;
 
+Answers.propTypes = {
+  answers: PropTypes.array.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+  classes: PropTypes.object
+}
+
+Answers.defaultProps = {
+  classes: defaultClasses
+}
+
+export default Answers
