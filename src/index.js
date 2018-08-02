@@ -127,4 +127,6 @@ class Test extends Component {
   }
 }
 
+export {PairTest} from './PairTest'
+
 export default Test
