@@ -33,3 +33,29 @@
   color: white;
 }
 
+.pairs {
+  padding: 0 10px;
+  margin-bottom: 20px;
+  display: table;
+}
+
+.pair {
+  display: table-row;
+}
+
+.pair:nth-child(even) {
+  background: #ffa;
+  color: #b92;
+}
+
+.pair:nth-child(odd) {
+  background: #b92;
+  color: #ffa;
+}
+
+.pair span {
+  display: table-cell;
+  padding: 0 20px;
+  text-align: center;
+}
+

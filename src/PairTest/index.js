@@ -6,6 +6,7 @@ import _ from 'lodash'
 import classes from './index.css'
 
 import NextQuestion from '../components/NextQuestion'
+import ResultBar from '../components/ResultBar'
 const cx = classNames.bind(classes)
 
 export class PairTest extends Component {
@@ -107,7 +108,8 @@ export class PairTest extends Component {
     if (this.props.test.objects.length <= this.state.current) {
       return (
         <div>
-          <button onClick={this.props.onClickDone}>Ок</button>
+          <ResultBar right={this.state.right} wrong={this.state.wrong} rate={this.state.rate} />
+          <NextQuestion onClick={this.props.onClickDone} text={'Finish'} />
         </div>
       )
     }
@@ -121,18 +123,20 @@ export class PairTest extends Component {
 
     return (
       <div>
-        <div style={{height: `${this.state.keys.length * 2}ex`}}>
-          {this.state.pairs.map((pair, i) => (
-            <div key={pair.value}>
-              <span>{object[pair.value]}</span>
-              <span>{'->'}</span>
-              <span>{this.props.test.labels[pair.label]}</span>
-              <span>{this.result(pair) === null
-                ? <span className={classes.removePair} onClick={this.removePair(i)}>&times;</span>
-                : `${this.result(pair)}`
-              }</span>
-            </div>
-          ))}
+        <div style={{height: `${this.state.keys.length * 2.2}ex`}}>
+          <div className={classes.pairs}>
+            {this.state.pairs.map((pair, i) => (
+              <div className={classes.pair} key={pair.value}>
+                <span className={classes.value}>{object[pair.value]}</span>
+                <span className={classes.mapsto}>{'->'}</span>
+                <span className={classes.label}>{this.props.test.labels[pair.label]}</span>
+                <span className={classes.actions}>{this.result(pair) === null
+                  ? <span className={classes.removePair} onClick={this.removePair(i)}>&times;</span>
+                  : `${this.result(pair)}`
+                }</span>
+              </div>
+            ))}
+          </div>
         </div>
         <div className={classes.wrap}>
           <div className={cx('left', 'side')}>
@@ -156,7 +160,10 @@ export class PairTest extends Component {
         </div>
         <div>
           {this.state.keys.length === this.state.pairs.length
-            ? <NextQuestion onClick={this.next} />
+            ? <div>
+              <NextQuestion onClick={this.next} />
+              <ResultBar right={this.state.right} wrong={this.state.wrong} rate={this.state.rate} />
+            </div>
             : null
           }
         </div>
